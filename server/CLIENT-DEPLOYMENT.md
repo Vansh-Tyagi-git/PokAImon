@@ -1,6 +1,6 @@
 # Client Deployment Guide
 
-This guide explains how to build and deploy the client-tutorial to be served from the server.
+This guide explains how to build and deploy the client to be served from the server.
 
 ## Quick Deploy
 
@@ -10,7 +10,7 @@ npm run build-client
 ```
 
 This will:
-1. Build the client-tutorial production bundle
+1. Build the client production bundle
 2. Copy it to `server/public/app/`
 3. Server will serve it at `http://your-server/app/`
 
@@ -18,7 +18,7 @@ This will:
 
 ### 1. Production API URL
 
-The client needs to know where your API is. Set this in `client-tutorial/.env`:
+The client needs to know where your API is. Set this in `client/.env`:
 
 ```bash
 VITE_BACKEND_URL=https://your-production-domain.com
@@ -77,13 +77,13 @@ Set `VITE_BACKEND_URL` before building:
 
 **For same-server deployment:**
 ```bash
-# client-tutorial/.env
+# client/.env
 VITE_BACKEND_URL=https://your-domain.com
 ```
 
 **For separate API server:**
 ```bash
-# client-tutorial/.env
+# client/.env
 VITE_BACKEND_URL=https://api.your-domain.com
 ```
 
