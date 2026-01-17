@@ -157,20 +157,15 @@ app.post('/api/generate', async (req, res) => {
       
       return res.json(saved);
     } catch (aiErr) {
-      console.warn('[AI] Falling back to simulated generation:', aiErr.message);
-      const simulated = simulatePokemon(doodle_data);
-      const saved = await db.insert(simulated);
-      
-      // Update gallery cache by prepending new Pokemon
-      const cached = await cache.get('gallery:all');
-      if (cached && Array.isArray(cached)) {
-        cached.unshift(saved);
-        await cache.set('gallery:all', cached, 300);
-        console.log('Cache updated: gallery:all in insert fallback')
+        console.error('[AI ERROR FULL]', aiErr);
+
+        return res.status(500).json({
+          error: 'Gemini failed',
+          message: aiErr?.message || String(aiErr),
+          name: aiErr?.name,
+          stack: aiErr?.stack,
+        });
       }
-      
-      return res.json(saved);
-    }
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to generate' });
