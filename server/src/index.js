@@ -8,9 +8,12 @@ import { saveBase64Image } from './imageStorage.js';
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 3001;
+const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
+
+const app = express();
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
+
 
 app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json({ limit: '4mb' }));
@@ -242,9 +245,10 @@ app.post('/api/pokaimon/:id/action-image', async (req, res) => {
 
     const b64 = await generateActionImage(
       {
-        baseImageDataUrl: pokemon.image_url.startsWith('/images/') 
-          ? `http://localhost:${PORT}${pokemon.image_url}` 
-          : pokemon.image_url,
+        baseImageDataUrl: pokemon.image_url.startsWith('/images/')
+          ? `${BASE_URL}${pokemon.image_url}`
+          : pokemon.image_url
+        ,
         name: pokemon.name,
         type: pokemon.type,
         characteristics: pokemon.characteristics,
